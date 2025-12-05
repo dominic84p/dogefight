@@ -42,7 +42,7 @@ Special thanks to
 made with ❤️
 
 Credits 
-Dominic84p
+Dominic84p  
 Prolly slatefv or some shi idfk
 
 Ps: Plz giv credit or I be sad, And if u deadazz sell ts ur a dick. 
