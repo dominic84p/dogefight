@@ -18,6 +18,8 @@ document.getElementById('upload').addEventListener('change', function(event) {
 
 // <- MAth random so it reload the images ✅ -> //
 
+dog1.crossOrigin = 'anonymous';
+dog2.crossOrigin = 'anonymous';
 dog1.src = 'https://cataas.com/cat?' + Math.random();
 dog2.src = 'https://cataas.com/cat?' + Math.random();
 
@@ -26,22 +28,45 @@ document.getElementById('rf').addEventListener('click', function() {
 })
 
 document.getElementById('nc').addEventListener('click', async function() {
-    document.getElementById('res').textContent = "Loading";
+    const res = document.getElementById('res');
+    res.textContent = "Loading";
+    res.classList.add('loading');
     await sendAi();
+    res.classList.remove('loading');
 });
 
 
 // <- Main send thing 6000 or whatever -> //
 
 async function sendAi() {
+    // <- Convert to base64 so worker gets exact same images not new random ones -> //
+    const canvas1 = document.createElement('canvas');
+    const canvas2 = document.createElement('canvas');
+    const ctx1 = canvas1.getContext('2d');
+    const ctx2 = canvas2.getContext('2d');
+    
+    canvas1.width = dog1.naturalWidth;
+    canvas1.height = dog1.naturalHeight;
+    canvas2.width = dog2.naturalWidth;
+    canvas2.height = dog2.naturalHeight;
+    
+    ctx1.drawImage(dog1, 0, 0);
+    ctx2.drawImage(dog2, 0, 0);
+    
+    const base64_1 = canvas1.toDataURL('image/jpeg');
+    const base64_2 = canvas2.toDataURL('image/jpeg');
+    
+    console.log('Cat 1 URL:', dog1.src.substring(0, 100));
+    console.log('Cat 2 URL:', dog2.src.substring(0, 100));
+    
     const response = await fetch('https://dogfight-api.therealdominic84plays.workers.dev', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            dog1: dog1.src,
-            dog2: dog2.src,
+            dog1: base64_1,
+            dog2: base64_2,
             mode: 'cat'
         })
     });

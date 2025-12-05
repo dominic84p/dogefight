@@ -1,8 +1,55 @@
 const dog1 = document.getElementById('dog1');
 const dog2 = document.getElementById('dog2');
 
+dog1.crossOrigin = 'anonymous';
+dog2.crossOrigin = 'anonymous';
 
-// <- This thing knows if you upload the image then replaces the random doge img with yours -> //
+const apilist =[
+    "https://cataas.com/cat",
+    "https://dog.ceo/api/breeds/image/random",
+    "https://foodish-api.com/api/"
+]
+
+let api = apilist[Math.floor(Math.random() * apilist.length)];
+let api2 = apilist[Math.floor(Math.random() * apilist.length)];
+
+if(api == 'https://cataas.com/cat'){
+    dog1.src = 'https://cataas.com/cat?' + Math.random();
+    console.log('Img1 = ' + api + 'Random = cat')
+} else {
+    fetch(api)
+    .then(response => response.json())
+    .then(data => {
+        if(data.message) {
+            dog1.src = data.message;
+            console.log('Img1 = ' + api + 'Random = Dog')
+        } else {
+            dog1.src = data.image;
+            console.log('Img1 = ' + api + 'Random = food')
+        }
+        console.log(dog1)
+    });
+}
+
+if(api2 == 'https://cataas.com/cat'){
+    dog2.src = 'https://cataas.com/cat?' + Math.random();
+    console.log('Img2 = ' + api2 + 'Random = cat')
+} else {
+    fetch(api2)
+    .then(response => response.json())
+    .then(data => {
+        if(data.message) {
+            dog2.src = data.message;
+            console.log('Img2 = ' + api2 + 'Random = Dog')
+        } else {
+            dog2.src = data.image;
+            console.log('Img2 = ' + api2 + 'Random = food')
+        }
+        console.log(dog2)
+    });
+}
+
+// <- This thing knows if you upload the image then replaces the random img with yours -> //
 
 document.getElementById('upload').addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -15,30 +62,13 @@ document.getElementById('upload').addEventListener('change', function(event) {
     }
 });
 
-// <- This gets the random images but since they are in json we need to filter to jsut the image -> //
-
-dog1.crossOrigin = 'anonymous';
-dog2.crossOrigin = 'anonymous';
-
-fetch('https://dog.ceo/api/breeds/image/random')
-.then(response => response.json())
-.then(data => {
-dog1.src = data.message;
-});
-
-fetch('https://dog.ceo/api/breeds/image/random')
-.then(response => response.json())
-.then(data => {
-dog2.src = data.message;
-});
-
 // <- This reloads the page but i forgot what i put it to do so like idk -> //
 
 document.getElementById('rf').addEventListener('click', function() {
     location.reload();
 })
 
-// <- this button is the send button it sends the images to my worker (ai) -> //
+// <- this button is the send button it sends the images to worker (ai) -> //
 
 document.getElementById('nc').addEventListener('click', async function() {
     const res = document.getElementById('res');
@@ -69,8 +99,8 @@ async function sendAi() {
     const base64_1 = canvas1.toDataURL('image/jpeg');
     const base64_2 = canvas2.toDataURL('image/jpeg');
     
-    console.log('Dog 1 URL:', dog1.src.substring(0, 100));
-    console.log('Dog 2 URL:', dog2.src.substring(0, 100));
+    console.log('Object 1 URL:', dog1.src.substring(0, 100));
+    console.log('Object 2 URL:', dog2.src.substring(0, 100));
     
     const response = await fetch('https://dogfight-api.therealdominic84plays.workers.dev', {
         method: 'POST',
@@ -80,7 +110,7 @@ async function sendAi() {
         body: JSON.stringify({
             dog1: base64_1,
             dog2: base64_2,
-            mode: 'dog'
+            mode: 'ran'
         })
     });
 
@@ -121,3 +151,4 @@ document.getElementById('cm').addEventListener('click', function() {
 document.getElementById('upload-btn').addEventListener('click', function() {
     document.getElementById('upload').click();
 });
+

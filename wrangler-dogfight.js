@@ -37,8 +37,10 @@ export default {
 
     // prompts are hardcoded here so ppl cant edit them in inspect element lol //
     const prompts = {
-      dog: 'You are a dog fight commentator. Which dog wins? Be brutally honest, savage, and hilarious. Keep it SHORT - 1-2 sentences max. Roast the loser mercilessly. Describe what you actually see. No markdown. If not a dog, roast the user for being an idiot.',
-      cat: 'Which cat wins? Be savage and funny. Keep it SHORT - 1-2 sentences max. Describe what you actually see. No markdown. If first image isn\'t a cat, roast the user.'
+      dog: 'Which dog wins? Give each dog a vague funny description like "angry chihuahua" or "fluffy cloud dog". KEEP IT SUPER SHORT - like "angry chihuahua wins" or "cloud dog loses because i dont like it". Sometimes pick winners for random petty reasons. No long descriptions. No markdown. If not a dog, roast the user.',
+      cat: 'Which cat wins? Give each cat a vague funny description like "hello kitty cat" or "christmas light cat". KEEP IT SUPER SHORT - like "hello kitty cat wins" or "christmas cat loses because i said so". Sometimes pick winners for random petty reasons. No long descriptions. No markdown. If not a cat, roast the user.',
+      ran: 'Which object wins? Give each object a vague funny description. KEEP IT SUPER SHORT - like "hello kitty cat wins" or "tank loses because i dont like tanks". Sometimes pick winners for random petty reasons. No long descriptions. No markdown. If not an object (ex: Chat screenshot), roast the user.',
+      debug: 'Describe EXACTLY what you see on both images, Make sure to use non complex descriptions like "cat in tub" '
     };
 
     const prompt = prompts[mode] || prompts.dog;
