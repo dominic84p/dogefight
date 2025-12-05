@@ -1,0 +1,8 @@
+name = "dogfight-api"
+main = "wrangler-dogfight.js"
+compatibility_date = "2025-12-04"
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+# Replace with ur actual id, Refer to the readme for guide
+id = "3d78e20f7b6e41a89429a097622c7aad"
