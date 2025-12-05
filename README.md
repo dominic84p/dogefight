@@ -6,14 +6,14 @@ also has cat mode
 
 ## setup
 
-1. get an api key from openrouter.ai
+1. get a free api key from google ai studio (https://aistudio.google.com/apikey)
 2. create a cloudflare worker 
 ```bash
 wrangler deploy -c wrangler-dogfight.toml
 ```
 3. add your api key as a secret:
 ```bash
-wrangler secret put OPENROUTER_KEY
+wrangler secret put GEMINI_KEY
 ```
 4. create a kv namespace for rate limiting:
 ```bash
@@ -25,6 +25,8 @@ wrangler kv namespace create RATE_LIMIT
 wrangler deploy -c wrangler-dogfight.toml
 ```
 7. update the worker url in app.js and cat.js
+
+note: switched from openrouter to gemini, Use older ver of worker (1.0.0) if want openrouter
 
 ## features
 
